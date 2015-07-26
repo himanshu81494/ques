@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body style="padding: 10px;">
+<xmp>
+Mergesort - a divide and Conquer algorithm.
+Divides input array in two halves, calls itself for 
+two halves and then merges the two sorted halves.
+</xmp>
+<div style="border: 1px solid; background-color:#f1f1f1; max-width:600px; padding-left:8px;">
+<xmp>
+MergeSort(arr[], l, r)
+If r > l:
+	1. Find the middle point to divide the array in two halves
+	m = (l+r)/2;
+	2. Call mergeSort for first half:
+		mergeSort(arr, l, m);
+	3. Call mergeSort for second half:
+		mergeSort(arr, m+1, r);
+	4. Merge the two halves:
+		call merge(arr, l, m, r);
+</xmp>
+</div>
+<xmp>
+{38, 27, 43, 3, 9, 82, 10}
+{38,27,43,3}  	{9,82,10}
+{38,27}   {43,3}   {9,82}   {10}
+{38} {27} {43} {3} {9} {82} {10}
+--------------------------------
+{27,38}   {3,43}   {9,82}   {10}
+{3,27,38,43}       {9,10,82}
+{3,9,10,27,38,43,82} 
+CODE GOES HERE -->
+</xmp>
+<div style="border: 1px solid; background-color:#f1f1f1;max-width:750px;padding-left:8px;">
+<xmp>
+void merge(int arr[], int l, int m, int r)
+{
+	int i, j, k;
+	int n1 = m-l+1;
+	int n2 = r-m;
+	int L[n1], R[n2];
+
+	for(i = 0;i < n1; i++)
+		L[i] = arr[l+i];
+	for(j = 0;j < n2; j++)
+		R[j] = arr[m+1+j];
+
+	i = j =0;
+	k = l;
+	while(i < n1 && j < n2)
+	{
+		if(L[i] <= R[j])
+		{
+			arr[k] = L[i];
+			i++;
+		}
+		else{
+			arr[k] = R[j];
+			j++;
+		}k++;
+	}
+	while(i < n1)
+	{
+		arr[k] = L[i];
+		i++;k++;
+	}
+	while(j < n2)
+	{
+		arr[k] = R[j];
+		j++;k++;
+	}
+}
+
+// now mergesort
+void mergeSort(int arr[], int l, int r)
+{
+	ir(l < r)
+	{
+		int m = l+(r-l)/2; // same as (l+r)/2 but avoids overflows
+		mergeSort(arr, l, m);
+		mergeSort(arr, m+1, r);
+		merge(arr, l, m, r);
+	}
+}
+</xmp>
+</div>
+<xmp>
+void printArray(int A[], int size)
+{
+	int i;
+	for(i=0;i < size;i++)
+	printf("%d ", A[i]);
+		printf("/n");
+	
+}
+int main()
+{
+int arr[] = {12, 11, 13, 5, 6, 7};
+	int arr_size = sizeof(arr)/sizeof(arr[0]);
+
+	printf("given: ");
+	printArray(arr, arr_size);
+	mergeSort(arr, 0, arr_size-1);
+	printf("after sorting: /n");
+	printArray(arr, arr_size);
+	return 0;
+}
+</xmp>
+</body>
+</html>
